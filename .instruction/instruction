@@ -1,0 +1,36 @@
+1. create a powershell script called "Set-Services" 
+    a. declare script global variable called "services" as array of Ps custom Object which has property Folder, ContainerName, Port
+    b. create function call "Set-Services" with array of string as parameter called "Service". If parameter "Service" not not null, then set global variable "services" as parameter "Services"    
+ **generate Set-Services.ps1      
+
+2. write a powershell function call "Get-CodeBaseFolder" which take a string parameter as "BaseFolder"
+	a. if BaseFolder doesn't pass, take environment variable CodeBaseFolder 
+      b. check the folder exists or not, if not, create the folder and log information as "creating folder.." with folder path
+	c. return the folder 
+**generate Get-CodeBaseFolder.ps1
+
+3. write a powershell function call "Get-Services"     
+    a. the function takes 2 parameters, 1st parameters as array of string parameter called "Include", 2nd parameter as array of string called  "Exclude"
+    b. declare array variable called "retSrvs"
+    c. if parameter "Include" is empty, set variable "retSrvs" as global variable called "services". d. For each item in "Include", check whether it matches any of global variable called "services"'s "Folder". If it doesn't, log "No match found". Otherwise, assign it to variable "found", and then add found to variable  "retSrvs"  
+    e. For each item in "Exclude", check whether it matches any of variable  "retSrvs". If it doesn't, log "No match found". Otherwise, remove that item to variable  "retSrvs"
+    f. if variable  "retSrvs" doesn't have anything, then log "No services match"
+    g. return variable "retSrvs"
+**generate Get-Get-Services.ps1
+
+4. write a powershell function call" Get-ServicesSource"
+    a. the function parameters are below 
+        1)  1st parameter is a string type called "CodeBaseFolder" 
+        2)  2nd parameter is a string array type called "Include"
+        3)  3rd parameter is a string array type called "Exclude" 
+        4)  4th parameter is a switch type called "Pull" 
+        5)  5th parameter is a switch type called "Checkout"
+    b. assign "CodeBaseFolder" by calling function "Get-CodeBaseFolder" with  parameter "CodeBaseFolder"
+    c. assign variable "services" by calling function  "Get-Services" with  parameter "Include" & "Exclude" 
+    b. for each item in variable "services"
+        1) git clone from "https://github.com"
+        2) If "Checkout" is true, then git checkout
+        3) If "Pull" is true, then git pull.   
+**generate  Get-ServicesSource.ps1
+
+5. 
