@@ -1,13 +1,13 @@
 function Start-Mq {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [string]$User,
+        [Parameter()]
+        [string]$User = "guest",
 
-        [Parameter(Mandatory=$true)]
-        [string]$Pw,
+        [Parameter()]
+        [string]$Pw = "guest",
 
-        [Parameter(Mandatory=$true)]
+        [Parameter()]
         [string]$PrivateRegistry,
 
         [Parameter()]
@@ -42,8 +42,8 @@ function Start-Mq {
     }
 
     # Check if RabbitMQ image exists
-    $exists = docker images -q $ImageTag
-    if ($exists) {
+    $imageExists = docker images -q $ImageTag
+    if ($imageExists) {
         if ($Rebuild) {
             docker rmi $ImageTag
         } else {
