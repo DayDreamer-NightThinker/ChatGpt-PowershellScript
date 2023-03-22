@@ -33,4 +33,23 @@
         3) If "Pull" is true, then git pull.   
 **generate  Get-ServicesSource.ps1
 
-5. 
+5. write a powershell function call "Start-Mq" 
+	with below parameters 
+		a. parameter "User" as string type
+            b. parameter "Pw" as string type       
+		c. parameter "PrivateRegistry" as string type 
+		d. parameter "ImageTag" as string type with default value as "docker.io/rabbitmq:3.8.14-management"
+	    e. parameter "DataVolume" as string type with validatescript to check whether it is empty or it exists as a path
+		f. parameter "Rebuild" as switch type        
+		g. parameter "UsePrivateRegistry" as switch type   
+	-. check whether docker network "services" exists. if not exists, create docker network "services"
+	-. check docker container "rabbitmq" is running. If it is running, then check whether "Rebuild" is true. If "Rebuild" is true, stop the conatiner, otherwise, return from function
+	-.  varaible "exists" to check docker image "rabbitmq" is there.
+	-.  If varaible "exists" is true and "Rebuild" is true, docker remove "rabbitmq" image. If only varaible "exists" is ture, then docker start "rabbitmq"
+	-.  if "UsePrivateRegistry" is true, then variable "imageName" is "privateRegistry" + "/" +  parameter "ImageTag", otherwise "imageName" is parameter "ImageTag", otherwise 
+ 	-.  docker run with
+		- "hostname" as "rabbitmq" 
+		- "name" as "rabbitmq",      
+            - port forward 15672 to 15672 and 5672 to 5672 
+		- network as "services"
+            - image tag as variable "imageName"
